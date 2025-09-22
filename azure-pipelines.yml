@@ -70,12 +70,12 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    - task: DependencyCheck@6
+    - task: dependency-check-build-task@5
       inputs:
-        projectName: 'wanderlust'
-        scanPath: '$(System.DefaultWorkingDirectory)'
+        scanPath: '$(Build.SourcesDirectory)'
         format: 'ALL'
         outDir: '$(Build.ArtifactStagingDirectory)/dependency-check-report'
+
     - publish: '$(Build.ArtifactStagingDirectory)/dependency-check-report'
       artifact: OWASPReport
 
