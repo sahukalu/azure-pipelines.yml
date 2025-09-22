@@ -18,10 +18,10 @@ variables:
   FRONTEND_IMAGE: 'wanderlust-frontend-beta'
   SONAR_PROJECT_KEY: 'wanderlust'
   SONAR_PROJECT_NAME: 'wanderlust'
-  SONAR_HOST_URL: 'http://<SONAR_HOST>:9000'    # replace with your Sonar host
+  SONAR_HOST_URL: 'https://sonarcloud.io/'    # replace with your Sonar host
   # Names of service connections you will create in Azure DevOps:
-  DOCKER_SERVICE_CONNECTION: 'DockerHubServiceConnection'
-  SONAR_SERVICE_CONNECTION: 'SonarServiceConnection'
+  DOCKER_SERVICE_CONNECTION: 'azurepipeline'
+  SONAR_SERVICE_CONNECTION: 'azurepipeline'
 
 stages:
 - stage: Validate
@@ -89,7 +89,7 @@ stages:
     steps:
     - task: SonarQubePrepare@5   # ✅ correct task name
       inputs:
-        SonarQube: '$(sonarqube)'        # service connection name
+        SonarQube: '$(azurepipeline)'        # service connection name
         scannerMode: 'CLI'
         configMode: 'manual'
         cliProjectKey: '$(SONAR_PROJECT_KEY)'
