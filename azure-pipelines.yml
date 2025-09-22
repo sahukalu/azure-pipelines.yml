@@ -70,7 +70,7 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    - task: dependency-check-build-task@5
+    - task: dependency-check-build-task@6   # ✅ correct task name
       inputs:
         scanPath: '$(Build.SourcesDirectory)'
         format: 'ALL'
@@ -87,7 +87,7 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    - task: SonarQubePrepare@5
+    - task: SonarQubePrepare@5   # ✅ correct task name
       inputs:
         SonarQube: '$(SONAR_SERVICE_CONNECTION)'        # service connection name
         scannerMode: 'CLI'
@@ -96,8 +96,10 @@ stages:
         cliProjectName: '$(SONAR_PROJECT_NAME)'
         extraProperties: |
           sonar.host.url=$(SONAR_HOST_URL)
-    - task: SonarQubeAnalyze@5
-    - task: SonarQubePublish@5
+
+    - task: SonarQubeAnalyze@5   # ✅ correct task name
+
+    - task: SonarQubePublish@5   # ✅ correct task name
       inputs:
         pollingTimeoutSec: '300'
 
