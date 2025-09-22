@@ -1,4 +1,3 @@
-# azure-pipelines.yml
 trigger:
   branches:
     include:
@@ -70,7 +69,7 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    - task: dependency-check-build-task@6   # ✅ correct task name
+    - task: dependency-check-build-task@6
       inputs:
         scanPath: '$(Build.SourcesDirectory)'
         format: 'ALL'
@@ -87,9 +86,9 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    - task: SonarQubePrepare@5   # ✅ correct task name
+    - task: SonarQubePrepare@5
       inputs:
-        SonarQube: '$(azurepipeline)'        # service connection name
+        SonarQube: '$(SONAR_SERVICE_CONNECTION)'         # use correct service connection variable
         scannerMode: 'CLI'
         configMode: 'manual'
         cliProjectKey: '$(SONAR_PROJECT_KEY)'
@@ -97,9 +96,9 @@ stages:
         extraProperties: |
           sonar.host.url=$(SONAR_HOST_URL)
 
-    - task: SonarQubeAnalyze@5   # ✅ correct task name
+    - task: SonarQubeAnalyze@5
 
-    - task: SonarQubePublish@5   # ✅ correct task name
+    - task: SonarQubePublish@5
       inputs:
         pollingTimeoutSec: '300'
 
@@ -132,7 +131,7 @@ stages:
         command: buildAndPush
         repository: $(BACKEND_IMAGE)
         dockerfile: backend/Dockerfile
-        containerRegistry: $(azurepipeline)
+        containerRegistry: '$(DOCKER_SERVICE_CONNECTION)'     # use correct variable here
         tags: |
           ${{ parameters.BACKEND_DOCKER_TAG }}
 
@@ -142,7 +141,7 @@ stages:
         command: buildAndPush
         repository: $(FRONTEND_IMAGE)
         dockerfile: frontend/Dockerfile
-        containerRegistry: $(azurepipeline)
+        containerRegistry: '$(DOCKER_SERVICE_CONNECTION)'     # use correct variable here
         tags: |
           ${{ parameters.FRONTEND_DOCKER_TAG }}
 
