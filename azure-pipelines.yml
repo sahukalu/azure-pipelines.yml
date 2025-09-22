@@ -20,7 +20,7 @@ variables:
   SONAR_HOST_URL: 'https://sonarcloud.io/'    # replace with your Sonar host
   # Names of service connections you will create in Azure DevOps:
   DOCKER_SERVICE_CONNECTION: 'azurepipeline'
-  SONAR_SERVICE_CONNECTION: 'azurepipeline'
+  SONAR_SERVICE_CONNECTION: 'SonarServiceConnection'
 
 stages:
 - stage: Validate
