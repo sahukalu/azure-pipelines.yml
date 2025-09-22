@@ -89,7 +89,7 @@ stages:
     steps:
     - task: SonarQubePrepare@5   # ✅ correct task name
       inputs:
-        SonarQube: '$(SONAR_SERVICE_CONNECTION)'        # service connection name
+        SonarQube: '$(sonarqube)'        # service connection name
         scannerMode: 'CLI'
         configMode: 'manual'
         cliProjectKey: '$(SONAR_PROJECT_KEY)'
@@ -132,7 +132,7 @@ stages:
         command: buildAndPush
         repository: $(BACKEND_IMAGE)
         dockerfile: backend/Dockerfile
-        containerRegistry: $(DOCKER_SERVICE_CONNECTION)
+        containerRegistry: $(azurepipeline)
         tags: |
           ${{ parameters.BACKEND_DOCKER_TAG }}
 
@@ -142,7 +142,7 @@ stages:
         command: buildAndPush
         repository: $(FRONTEND_IMAGE)
         dockerfile: frontend/Dockerfile
-        containerRegistry: $(DOCKER_SERVICE_CONNECTION)
+        containerRegistry: $(azurepipeline)
         tags: |
           ${{ parameters.FRONTEND_DOCKER_TAG }}
 
